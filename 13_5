@@ -27,7 +27,7 @@ async def start_commands(message):
 @dp.message_handler(text="information")
 async def information(message):
     await message.answer('This is bot for calculation of calories on your body data :) For continue press calculation!', reply_markup = greet_kb)
-    
+
 @dp.message_handler(text="calculation") 
 async def set_age(message):
     await message.answer('Write you age, please')
@@ -56,14 +56,18 @@ async def fsm_handler(message, state = FSMContext):
     await state.update_data(gender_text = message.text)
     data = await state.get_data()
     if data["gender_text"]=="woman":
-        await message.answer(f'You calculation of calories: {round((10*float(data["weigth_text"]) + 6.25*float(data["growth_text"]))-(5*float(data["age_text"]) + 5), 1)}')
-    elif data["gender_text"] == "men":
         await message.answer(f'You calculation of calories: {round((10*float(data["weigth_text"]) + 6.25*float(data["growth_text"]))-(5*float(data["age_text"]) - 161), 1)}')
+    elif data["gender_text"] == "men":
+        await message.answer(f'You calculation of calories: {round((10*float(data["weigth_text"]) + 6.25*float(data["growth_text"]))-(5*float(data["age_text"]) + 5), 1)}')
     else:
         await message.answer('Inccorect data!')
         print(data["gender_text"], data["growth_text"], data["weigth_text"], data["age_text"])
     await state.finish()
 
+@dp.message_handler()
+async def all_message(message):
+    await message.answer('Please, choose the appropriate option !', reply_markup = greet_kb)
 
 if __name__ =='__main__':
     executor.start_polling(dp, skip_updates=True)
+
