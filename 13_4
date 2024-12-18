@@ -16,11 +16,11 @@ class UserState(StatesGroup):
 
 @dp.message_handler(commands=["start"])
 async def start_commands(message):
-    await message.answer('Please, write calories for calculation!')
+    await message.answer('Hi! Please, write calories for calculation :)')
 
 @dp.message_handler()
 async def all_message(message):
-    await message.answer('Hi! Please, write calories for calculation !')
+    await message.answer('Please, write calories for calculation !')
 
 @dp.message_handler(text="calories") 
 async def set_age(message):
