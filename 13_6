@@ -16,7 +16,7 @@ inline_button_calculation = InlineKeyboardButton('calculation', callback_data='c
 button_information = KeyboardButton('information')
 button_calories = KeyboardButton('calories')
 
-button = ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True).row(button_information, button_calories)
+start_menu = ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True).row(button_information, button_calories)
 inline_button = InlineKeyboardMarkup(row_width=2).row(inline_button_formula, inline_button_calculation)
 
 
@@ -28,11 +28,11 @@ class UserState(StatesGroup):
 
 @dp.message_handler(commands=["start"])
 async def start_commands(message):
-    await message.answer('Please, choose the appropriate option :)', reply_markup = button)
+    await message.answer('Please, choose the appropriate option :)', reply_markup = start_menu)
 
 @dp.message_handler(text="information")
 async def information(message):
-    await message.answer('This is bot for calculation of calories on your body data :) For continue press calculation!', reply_markup = button)
+    await message.answer('This is bot for calculation of calories on your body data :) For continue press calculation!', reply_markup = start_menu)
 
 @dp.message_handler(text='calories')
 async def calories_inline(message):
@@ -82,7 +82,7 @@ async def fsm_handler(message, state = FSMContext):
 
 @dp.message_handler()
 async def all_message(message):
-    await message.answer('Please, choose the appropriate option !', reply_markup = button')
+    await message.answer('Please, choose the appropriate option !', reply_markup = start_menu')
 
 if __name__ =='__main__':
     executor.start_polling(dp, skip_updates=True)
